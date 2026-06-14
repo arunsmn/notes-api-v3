@@ -4,7 +4,6 @@ const authenticate = require("../middleware/auth");
 
 const {
   getAllNotes,
-  // getAllNotesWithAuthor,
   getNoteById,
   createNote,
   updateNote,
@@ -16,7 +15,6 @@ const {
 router.use(authenticate);
 
 router.get("/", getAllNotes);
-// router.get("/with-author", getAllNotesWithAuthor);
 router.get("/:id", getNoteById);
 router.post("/", createNote);
 router.put("/:id", replaceNote);

@@ -14,38 +14,6 @@ const getAllNotes = async (req, res) => {
   }
 };
 
-// const getAllNotesWithAuthor = async (req, res) => {
-//   try {
-//     // First query — get all notes
-//     const notes = await prisma.note.findMany({
-//       where: { userId: req.userid },
-//       include: {
-//         user: {
-//           select: {
-//             name: true,
-//           },
-//         },
-//       },
-//     });
-
-//     // For each note, get the author — THIS IS THE PROBLEM
-//     const notesWithAuthor = await Promise.all(
-//       notes.map(async (note) => {
-//         const user = await prisma.user.findUnique({
-//           where: { id: note.userId },
-//         });
-
-//         return { ...note, author: user.name };
-//       }),
-//     );
-
-//     res.status(200).json(notesWithAuthor);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Something went wrong" });
-//   }
-// };
-
 const getNoteById = async (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -191,7 +159,6 @@ const deleteNote = async (req, res) => {
 
 module.exports = {
   getAllNotes,
-  getAllNotesWithAuthor,
   getNoteById,
   createNote,
   updateNote,
