@@ -21,23 +21,25 @@ A RESTful notes API built with Node.js, Express, PostgreSQL, and Prisma ORM. Fea
 
 ## Project Structure
 
+```
 notes-api-v3/
-├── app.js — Express setup, middleware, error handlers
-├── server.js — starts the server
+├── app.js              — Express setup, middleware, error handlers
+├── server.js           — starts the server
 ├── db/
-│ ├── prisma.js — Prisma client instance
-│ └── schema.sql — original schema reference
+│   ├── prisma.js       — Prisma client instance
+│   └── schema.sql      — original schema reference
 ├── middleware/
-│ └── auth.js — JWT verification middleware
+│   └── auth.js         — JWT verification middleware
 ├── prisma/
-│ ├── schema.prisma — data models
-│ └── migrations/ — migration history
+│   ├── schema.prisma   — data models
+│   └── migrations/     — migration history
 ├── routes/
-│ ├── auth.js — signup, login
-│ └── notes.js — protected notes routes
+│   ├── auth.js         — signup, login
+│   └── notes.js        — protected notes routes
 └── controllers/
-├── auth.js — auth logic
-└── notes.js — notes logic
+    ├── auth.js         — auth logic
+    └── notes.js        — notes logic
+```
 
 ## Getting Started
 
