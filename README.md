@@ -109,6 +109,61 @@ node server.js
 | PUT    | /notes/:id | Replace a note entirely          |
 | DELETE | /notes/:id | Delete a note                    |
 
+## GraphQL
+
+GraphQL endpoint available at `/graphql` alongside the REST API.
+
+### Example queries
+
+**Signup:**
+
+```graphql
+mutation {
+  signup(name: "Arun", email: "arun@example.com", password: "password123") {
+    token
+    user {
+      id
+      name
+      email
+    }
+  }
+}
+```
+
+**Get notes with author (one request):**
+
+```graphql
+{
+  notes {
+    id
+    title
+    content
+    user {
+      name
+    }
+  }
+}
+```
+
+**Create a note:**
+
+```graphql
+mutation {
+  createNote(title: "My note", content: "Hello world") {
+    id
+    title
+    content
+    createdAt
+  }
+}
+```
+
+All queries and mutations except signup and login require:
+
+```
+Authorization: Bearer <token>
+```
+
 ### Authentication
 
 All notes endpoints require a Bearer token in the Authorization header:
