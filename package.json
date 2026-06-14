@@ -12,10 +12,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@apollo/server": "^4.13.0",
+    "@as-integrations/express5": "^1.1.2",
     "@prisma/client": "^5.22.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "graphql": "^16.14.2",
+    "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.21.0",
     "prisma": "^5.22.0"

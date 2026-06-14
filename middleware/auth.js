@@ -18,7 +18,7 @@ const authenticate = (req, res, next) => {
     // Attach the user id to the request
     req.userId = decoded.userId;
 
-    // Pass control tot the next middleware or route handler
+    // Pass control to the next middleware or route handler
     next();
   } catch (err) {
     return res.status(401).json({ error: "Invalid or expired token" });
