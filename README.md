@@ -4,10 +4,8 @@ A RESTful notes API built with Node.js, Express, PostgreSQL, and Prisma ORM. Fea
 
 ## Live API
 
-```
 https://notes-api-v3.vercel.app
 Base URL for all endpoints. See API Reference below.
-```
 
 ## Tech Stack
 
