@@ -21,6 +21,7 @@ app.get("/health", (req, res) => {
 app.use("/auth", authRouter);
 app.use("/notes", notesRouter);
 
+// GraphQL setup
 const startServer = async () => {
   const server = new ApolloServer({ typeDefs, resolvers });
   await server.start();

@@ -1,12 +1,29 @@
 // controllers/notes.js
 const prisma = require("../db/prisma");
+const redis = require("../db/redis");
 
 const getAllNotes = async (req, res) => {
+  const cacheKey = `notes:user:${req.userId}`;
   try {
+    // Step 1 - check Redis first
+    const cached = await redis.get(cacheKey);
+
+    if (cached) {
+      console.log("Cache hit");
+      return res.status(200).json(JSON.parse(cached));
+    }
+
+    console.log("Cache miss");
+
+    // Step 2 - cache miss, query PostgreSQL
     const notes = await prisma.note.findMany({
       where: { userId: req.userId },
       orderBy: { createdAt: "desc" },
     });
+
+    // Step 3 - store in Redis with 60 seconds TTL
+    await redis.set(cacheKey, JSON.stringify(notes), "EX", 60);
+
     res.status(200).json(notes);
   } catch (err) {
     console.error("getAllNotes error:", err);
@@ -48,6 +65,10 @@ const createNote = async (req, res) => {
     const note = await prisma.note.create({
       data: { title, content, userId: req.userId },
     });
+
+    // Invalidate cache — notes list is now stale
+    await redis.del(`notes:user:${req.userId}`);
+
     res.status(201).json(note);
   } catch (err) {
     console.error("createNote error:", err);
@@ -87,6 +108,9 @@ const updateNote = async (req, res) => {
       },
     });
 
+    // Invalidate cache — notes list is now stale
+    await redis.del(`notes:user:${req.userId}`);
+
     res.status(200).json(updated);
   } catch (err) {
     console.error("updateNote error:", err);
@@ -123,6 +147,9 @@ const replaceNote = async (req, res) => {
       data: { title, content },
     });
 
+    // Invalidate cache — notes list is now stale
+    await redis.del(`notes:user:${req.userId}`);
+
     res.status(200).json(replaced);
   } catch (err) {
     console.error("replaceNote error:", err);
@@ -149,6 +176,9 @@ const deleteNote = async (req, res) => {
     await prisma.note.delete({
       where: { id },
     });
+
+    // Invalidate cache — notes list is now stale
+    await redis.del(`notes:user:${req.userId}`);
 
     res.sendStatus(204);
   } catch (err) {
